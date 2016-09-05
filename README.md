@@ -9,7 +9,7 @@ Android app to use as the base app for implementing the following material widge
 * Shared Element Activity Transition
 * Floating Action Button
 
-Video Walk through
+##Video Walk through:
 <img src='http://i.imgur.com/kpvs4tc.gif' title='App Video Walkthrough' width='' alt='App Video Walkthrough' />  
 
 The app is composed of two screens. The first screen displays a list of contacts, in which, each item is described by the contact's avatar and name. Once a contact is selected from the list, a second screen appears with additional details about the contact, including his contact no. and a floating action button to place a phone call to this contact.
