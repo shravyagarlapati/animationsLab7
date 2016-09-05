@@ -1,11 +1,14 @@
 package com.codepath.android.lollipopexercise.activities;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.codepath.android.lollipopexercise.R;
 import com.codepath.android.lollipopexercise.adapters.ContactsAdapter;
@@ -18,11 +21,14 @@ public class ContactsActivity extends AppCompatActivity {
     private RecyclerView rvContacts;
     private ContactsAdapter mAdapter;
     private List<Contact> contacts;
+    private MenuItem miAdd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts);
+
+        miAdd = (MenuItem) findViewById(R.id.miAdd);
 
         // Find RecyclerView and bind to adapter
         rvContacts = (RecyclerView) findViewById(R.id.rvContacts);
@@ -60,7 +66,26 @@ public class ContactsActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         return super.onOptionsItemSelected(item);
+
     }
+
+    public void onAddAction(MenuItem mi) {
+        contacts.add(Contact.getRandomContact(getApplicationContext()));
+        mAdapter = new ContactsAdapter(ContactsActivity.this, contacts);
+        rvContacts.setAdapter(mAdapter);
+
+        Snackbar.make(rvContacts, R.string.snackbar_contact_msg, Snackbar.LENGTH_INDEFINITE)
+                .setAction(R.string.snackbar_undo_msg, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        contacts.remove(contacts.size()-1);
+                        mAdapter.notifyDataSetChanged();
+
+                    }
+                })
+                .setActionTextColor(ContextCompat.getColor(ContactsActivity.this, R.color.accent))
+                .show(); // Don’t forget to show!
+    }
+
 }
